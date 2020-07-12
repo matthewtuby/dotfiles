@@ -22,7 +22,7 @@ function update() {
     sudo bash -c 'echo "Updating hosts file:" && 
                   echo "===========================" && 
                   curl https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling-porn-social/hosts |
-                  grep -E -v "(coinpot|cointiply|freebitco.in|bitfun.co|bonusbitcoin.co|moonbit.co.in|moonbitcoin.cash|moondash.co.in|moonliteco.in|moondoge.co.in|youtube|zerohedge)" >> /etc/hosts && 
+                  grep -E -v "(coinpot|cointiply|freebitco.in|bitfun.co|bonusbitcoin.co|moonbit.co.in|moonbitcoin.cash|moondash.co.in|moonliteco.in|moondoge.co.in|youtube|zerohedge)" > /etc/hosts && 
                   echo "0.0.0.0 9gag.com" >> /etc/hosts &&
                   echo "Finished"';
     echo "Updating packages:";
