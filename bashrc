@@ -1,17 +1,18 @@
-##################################################################
-# append to the end of the bash file, so you can have a wise cow #
-##################################################################
+###############################################################################################
+# append to the end of the bash file, so you can have a wise cow and the current price of btc #
+###############################################################################################
 
-btc() { echo "1 BTC = $(curl -s https://api.coindesk.com/v1/bpi/currentprice/$1.json | jq .bpi.\"$1\".rate | tr -d \"\"\") $1"; }
+binance() { echo "$(curl -s https://api.binance.com/api/v1/ticker/price\?symbol=$1 | jq '.price' ) "; }
 
 if [ -x /usr/bin/fortune -a -x /usr/bin/cowsay -a -x /usr/bin/lolcat ]; then
-    fortune -a | cowsay | lolcat &&
     BTC="# "
-    BTC+=$(btc USD)
+    btc="$(binance BTCUSDT)"
+    BTC+="BTCUSDT = "+"${btc:1:8}"
     BTC+=" #"
     python -c "print( '#'*len('$BTC'))" | lolcat &&
     echo $BTC | lolcat  &&
-    python -c "print( '#'*len('$BTC'))" | lolcat
+    python -c "print( '#'*len('$BTC'))" | lolcat &&
+    fortune -a | cowsay | lolcat
 fi
 
 ##########################
