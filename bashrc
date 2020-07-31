@@ -1,20 +1,3 @@
-###############################################################################################
-# append to the end of the bash file, so you can have a wise cow and the current price of btc #
-###############################################################################################
-
-binance() { echo "$(curl -s https://api.binance.com/api/v1/ticker/price\?symbol=$1 | jq '.price' ) "; }
-
-if [ -x /usr/bin/fortune -a -x /usr/bin/cowsay -a -x /usr/bin/lolcat ]; then
-    BTC="# "
-    btc="$(binance BTCUSDT)"
-    BTC+="BTCUSDT = "+"${btc:1:8}"
-    BTC+=" #"
-    python -c "print( '#'*len('$BTC'))" | lolcat &&
-    echo $BTC | lolcat  &&
-    python -c "print( '#'*len('$BTC'))" | lolcat &&
-    fortune -a | cowsay | lolcat
-fi
-
 ##########################
 # unique update function #
 ##########################
@@ -30,3 +13,30 @@ function update() {
     echo "===========================" ;
     yay -Syu
 }
+
+####################################################
+# shiny terminal wise cow and terminal binance api #
+####################################################
+
+binance_api() { echo "$(curl -s https://api.binance.com/api/v1/ticker/price\?symbol=$1 | jq '.price' ) "; }
+
+binance() {
+    currency="# "
+    price="$(binance_api $1)"
+    currency="$1 = "+"${price:1:8}"
+    currency+=" #"
+    python -c "print( '#'*len('$currency'))" | lolcat
+    echo $currency | lolcat
+    python -c "print( '#'*len('$currency'))" | lolcat
+}
+
+export HISTFILESIZE=10000
+PROMPT_COMMAND='history -a'
+
+[[ $- != *i* ]] && return
+[[ -z "$TMUX" ]] && exec tmux
+
+if [ -x /usr/bin/fortune -a -x /usr/bin/cowsay -a -x /usr/bin/lolcat ]; then
+    binance "BTCUSDT"
+    fortune -a | cowsay | lolcat
+fi
