@@ -5,6 +5,9 @@ colorscheme torte
 "plugin that detects filetpye
 filetype plugin on
 
+"ves insert mode
+imap ii <Esc>
+
 "line numbering
 set nu
 
