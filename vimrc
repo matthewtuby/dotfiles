@@ -129,6 +129,7 @@ autocmd FileType markdown map <F8> :w <bar> :!clear ; pandoc % -t beamer -o pres
 
 "PYTHON
 autocmd FileType python map <F8> :w <bar> !clear ; python3 % <CR>
+autocmd BufWritePost *.py execute ':Black'
 
 "R
 autocmd FileType r map <F8> :w <bar> !clear ; Rscript % <CR>
@@ -136,13 +137,18 @@ autocmd FileType r map <F8> :w <bar> !clear ; Rscript % <CR>
 "BASH
 autocmd FileType sh map <F8> :w <bar> !clear ; ./% <CR>
 
-"C#
-"autocmd FileType cs map <F8> :w <bar> !clear ; dotnet run<CR>
-autocmd FileType cs map <F8> :w <bar> !clear ; csc % -out:a.exe && mono a.exe ; rm a.exe<CR>
+"vyper
+autocmd FileType sh map <F8> :w <bar> !clear ; vyper ./% <CR>
 
 call plug#begin('~/.vim/plugged')
     Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
     Plug 'ambv/black' ,{'for':'python'}
-    "Plug 'neoclide/coc.nvim', {'branch': 'release'}
-    "Plug 'dense-analysis/ale'
+    Plug 'tomlion/vim-solidity'
+    Plug 'vyperlang/vim-vyper'
+    Plug 'neomake/neomake'
+    "Plug 'vim-syntastic/syntastic'
 call plug#end()
+
+"call neomake#configure#automake('w')
+"call neomake#configure#automake('rw', 1000)
+call neomake#configure#automake('nrwi', 500)
