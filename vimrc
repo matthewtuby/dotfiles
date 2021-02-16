@@ -146,6 +146,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'tomlion/vim-solidity'
     Plug 'vyperlang/vim-vyper'
     Plug 'neomake/neomake'
+    Plug 'davidhalter/jedi-vim'
     "Plug 'vim-syntastic/syntastic'
 call plug#end()
 
